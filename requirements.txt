@@ -1,2 +1,6 @@
 streamlit
 openai
+groq
+google-generativeai
+torch
+transformers
