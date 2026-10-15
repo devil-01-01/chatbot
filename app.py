@@ -27,7 +27,7 @@ if not GEMINI_API_KEY or not GROQ_API_KEY:
 # Configure APIs globally
 groq_client = Groq(api_key=GROQ_API_KEY)
 genai.configure(api_key=GEMINI_API_KEY)
-gemini_model = genai.GenerativeModel("gemini-2.5-flash")
+gemini_model = genai.GenerativeModel("gemini-3.6-flash")
 
 # Sidebar for controls
 with st.sidebar:
@@ -55,8 +55,8 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
   )
 
   for turn in range(max_turns):
-    # --- STEP 1: Groq (Llama) Speaks / Picks Topic ---
-    with st.spinner("🦙 Groq (Llama) is thinking of a topic & speaking..."):
+    # --- STEP 1: GPT Speaks / Picks Topic ---
+    with st.spinner("🦙 GPT is thinking of a topic & speaking..."):
       try:
         groq_messages = [
             {
@@ -87,11 +87,11 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
 
     with chat_box:
       with st.chat_message("assistant", avatar="🦙"):
-        st.markdown(f"**Groq (Llama):** {llama_statement}")
+        st.markdown(f"**GPT:** {Gpt_statement}")
 
     time.sleep(delay_time)
 
-    # Prepare prompt for Gemini using Llama's output
+    # Prepare prompt for Gemini using Gpt's output
     current_prompt = (
         f"Your opponent (Llama) brought up this point/topic: '{llama_statement}'. "
         "Respond to it, give your unique perspective, and ask a sharp follow-up question back to Llama. "
