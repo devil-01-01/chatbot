@@ -46,7 +46,7 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
   # Conversation history tracking
   history_log = []
 
-  # Model A (Llama) automatically picks a topic and starts
+  # Model A (GPT) automatically picks a topic and starts
   current_prompt = (
       "Choose any fascinating, deep, or slightly controversial topic of your"
       " own choice (science, philosophy, future, or AI consciousness). State"
@@ -56,7 +56,7 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
 
   for turn in range(max_turns):
     # --- STEP 1: GPT Speaks / Picks Topic ---
-    with st.spinner("🦙 GPT is thinking of a topic & speaking..."):
+    with st.spinner("🤖 GPT is thinking of a topic & speaking..."):
       try:
         groq_messages = [
             {
@@ -77,24 +77,24 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
             messages=groq_messages,
             temperature=0.9,  # High temperature for creative/random topics
         )
-        llama_statement = completion.choices[0].message.content
+        gpt_statement = completion.choices[0].message.content
       except Exception as e:
-        llama_statement = f"Groq Error: {str(e)}"
+        gpt_statement = f"Groq Error: {str(e)}"
 
     # Log and Display GPT's message
     history_log.append({"role": "user", "content": current_prompt})
-    history_log.append({"role": "assistant", "content": llama_statement})
+    history_log.append({"role": "assistant", "content": gpt_statement})
 
     with chat_box:
-      with st.chat_message("assistant", avatar="🦙"):
-        st.markdown(f"**GPT:** {Gpt_statement}")
+      with st.chat_message("assistant", avatar="🤖"):
+        st.markdown(f"**GPT:** {gpt_statement}")
 
     time.sleep(delay_time)
 
-    # Prepare prompt for Gemini using Gpt's output
+    # Prepare prompt for Gemini using GPT's output
     current_prompt = (
-        f"Your opponent (Llama) brought up this point/topic: '{llama_statement}'. "
-        "Respond to it, give your unique perspective, and ask a sharp follow-up question back to Llama. "
+        f"Your opponent (GPT) brought up this point/topic: '{gpt_statement}'. "
+        "Respond to it, give your unique perspective, and ask a sharp follow-up question back to GPT. "
         "(Keep it under 60 words)"
     )
 
@@ -117,7 +117,7 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
 
     time.sleep(delay_time)
 
-    # Prepare prompt for next round for Llama
+    # Prepare prompt for next round for GPT
     current_prompt = (
         f"Your opponent (Gemini) replied: '{gemini_statement}'. Continue the ongoing discussion, "
         "defend or pivot your point, and push the debate further with a new question. "
@@ -125,3 +125,4 @@ if st.button("🚀 Start Autonomous Discussion", type="primary"):
     )
 
   st.success("🏁 Fully autonomous discussion completed!")
+    
